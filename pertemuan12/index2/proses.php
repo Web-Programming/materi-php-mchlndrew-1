@@ -37,7 +37,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <title>Materi Dasar PHP Form POST</title>
 </head>
 <body>
-    <h2>Contoh PRoses Form POST</h2>
+    <h2>Contoh Proses Form POST</h2>
     <?php if(!empty($postErrors)): ?>
         <div class="error">
             <strong>Validasi gagal:</strong>
