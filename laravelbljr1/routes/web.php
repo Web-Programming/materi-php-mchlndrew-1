@@ -84,3 +84,24 @@ Route::get('/detailproduk/{name}', function($name){
         ]
     );
 });
+
+Route::get('/produk', function(){
+    return view ("produk.index");
+});
+Route::get('/produk/create', function(){
+    return view ('produk.create');
+});
+Route::get('/produk/search', function(){
+    return view ('produk.search');
+});
+Route::get('/produk/detail', function(){
+    return view ('produk.detail');
+});
+
+//Supplier
+Route::get('/supplier', function(){
+    return view ('supplier.index');
+});
+
+//php artisan make:controller ProductController --resource
+Route::reso
