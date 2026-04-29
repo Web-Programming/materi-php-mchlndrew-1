@@ -75,33 +75,44 @@ Route::get('/profil', function(){
 //});
 
 // Mengirim data ke view 
-Route::get('/detailproduk/{name}', function($name){
-    return view ("produk.detail", 
-        ['product_name' => $name,
-        'id'=>101,
-        'color'=> "silver",
-        'stock'=>12
-        ]
-    );
-});
+// Route::get('/detailproduk/{name}', function($name){
+//     return view ("produk.detail", 
+//         ['product_name' => $name,
+//         'id'=>101,
+//         'color'=> "silver",
+//         'stock'=>12
+//         ]
+//     );
+// });
 
-Route::get('/produk', function(){
-    return view ("produk.index");
-});
-Route::get('/produk/create', function(){
-    return view ('produk.create');
-});
-Route::get('/produk/search', function(){
-    return view ('produk.search');
-});
-Route::get('/produk/detail', function(){
-    return view ('produk.detail');
-});
+// Route::get('/produk', function(){
+//     return view ("produk.index");
+// });
+// Route::get('/produk/create', function(){
+//     return view ('produk.create');
+// });
+// Route::get('/produk/search', function(){
+//     return view ('produk.search');
+// });
+// Route::get('/produk/detail', function(){
+//     return view ('produk.detail');
+// });
 
-//Supplier
-Route::get('/supplier', function(){
-    return view ('supplier.index');
-});
+// //Supplier
+// Route::get('/supplier', function(){
+//     return view ('supplier.index');
+// });
 
+use App\Http\Controllers\ProductController;
 //php artisan make:controller ProductController --resource
-Route::reso
+Route::resource('/produk', ProductController::class);
+Route::get('/produk/search', ProductController::class.'@search');
+    
+
+//Suplier
+// Route::get('/supplier/', function(){
+//     return view('supplier.index');
+// });
+
+//php artisan make:controller SupplierController --resource
+Route::resource('/supplier', SupplierController::class);
