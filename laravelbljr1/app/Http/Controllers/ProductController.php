@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
     /**
@@ -11,12 +11,17 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product= [
-            ['id' => 1, 'name' => 'Laptop', 'price' => 7500000],
-            ['id' => 2, 'name' => 'Mouse', 'price' => 150000],
-            ['id' => 3, 'name' => 'Keyboard', 'price' => 300000],
-            ['id' => 4, 'name' => 'Monitor', 'price' => 2500000],
-        ];
+        $title = "Daftar Produk";
+        // $producst= [
+        //     ['id' => 1, 'name' => 'Laptop', 'price' => 7500000],
+        //     ['id' => 2, 'name' => 'Mouse', 'price' => 150000],
+        //     ['id' => 3, 'name' => 'Keyboard', 'price' => 300000],
+        //     ['id' => 4, 'name' => 'Monitor', 'price' => 2500000],
+        // ];
+    
+        // $products = Product::all();
+        $products = DB::select('SELECT * FROM products'); //cara 2
+        // $products = DB::table('products')->get();//cara3
     }
 
         //return view('produk.index', compact('title', 'products'));
