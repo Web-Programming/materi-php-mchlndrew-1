@@ -16,19 +16,25 @@
 <div class="container-fluid">
     <h1 class="mb-4">{{ $title }}</h1>
 
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
+
     <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th>No</th>
-                    <th>Nama Produk</th>
-                    <th>Harga</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- {{-- @for ($i = 0; $i < count($products); $i++)
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead class="table-dark">
                     <tr>
+                        <th>No</th>
+                        <th>Nama Produk</th>
+                        <th>Harga</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{-- @for ($i = 0; $i < count($products); $i++) <tr>
                         <td>{{ $i + 1 }}</td>
                         <td>{{ $products[$i]['name'] }}</td>
                         <td>Rp {{ number_format($products[$i]['price'], 2, ',', '.') }}</td>
@@ -37,21 +43,44 @@
                             <a href="{{ url('/produk/' . $products[$i]['id'] . '/edit') }}"
                                 class="btn btn-sm btn-primary">Edit</a>
                         </td>
-                    </tr>
-                @endfor --}} -->
-                @foreach ($products as $item)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $item['name'] }}</td>
-                    <td>Rp {{ number_format($item['price'], 2, ',', '.') }}</td>
-                    <td>
-                        <a href="{{ url('/produk/' . $item['id']) }}" class="btn btn-sm btn-info">Detail</a>
-                        <a href="{{ url('/produk/' . $item['id'] . '/edit') }}" class="btn btn-sm btn-primary">Edit</a>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                        </tr>
+                        @endfor --}}
+                        @foreach ($products as $item)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->name }}</td>
+                            <td>Rp {{ number_format($item->price, 2, ',', '.') }}</td>
+                            <td>
+                                <a href="{{ url('/produk/' . $item->id) }}" class="btn btn-sm btn-info">
+                                    Detail
+                                </a>
+
+                                <a href="{{ url('/produk/' . $item->id . '/edit') }}" class="btn btn-sm btn-primary">
+                                    Edit
+                                </a>
+
+                                <form action="{{ route('produk.destroy', $item->id) }}" method="POST"
+                                    style="display:inline;">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit" class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Yakin ingin menghapus data?')">
+
+                                        Hapus
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <div>
+                {{ $products->links() }}
+            </div>
+        </div>
     </div>
-</div>
-@endsection
+    @endsection

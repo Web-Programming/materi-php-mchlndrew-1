@@ -4,110 +4,112 @@ use Illuminate\Support\Facades\Route;
 
 //Route ke halaman utama (home)
 Route::get('/', function () {
-    echo "Hallo Nama saya Andrew";
+    echo "Hallo, Nama Saya Andrew";
     //return view('welcome');
 });
 //Route ke halaman alamat
 Route::get('/alamat', function(){
-    echo "Jalan Kolonel Atmo 12. Palembang";
+    echo "Jalan Kolonel Atmo 14. Palembang";
 });
-//Route ke /path1/path2/detail
+
+//Route ke halaman path1/path2/detail
 Route::get('/path1/path2/detail', function(){
-    echo "Jalan Kolonel Atmo 12. Palembang";
+    echo "Jalan Kolonel Atmo";
     echo "<br>";
     echo "Rt. 01 Rw. 02";
     echo "<br>";
-    echo "Kecamatan Ilir Timur 1";
+    echo "Kecamatan Duku";
     echo "<br>";
     echo "Kota Palembang";
     echo "<br>";
     echo "Provinsi Sumatera Selatan";
 });
 
-//Route dinamis dengan parameter id
-Route::get('/user1/{id}', function($id){
-    echo "User ID: ".$id;
+//Route Dinamis dengan parameter id
+Route::get('/user/{id}', function($id){
+    echo "User ID: " . $id;
 });
-//Route dinamis dengan parameter nama
+
+//Route Dinamis dengan parameter nama
 Route::get('/user2/{name}', function($name){
-    echo "User Name: ".$name;
+    echo "User Name: " . $name;
 });
-//Route dinamis dengan parameter nama
+
+//Route Dinamis dengan opsional parameter nama
 Route::get('/user3/{name?}', function($name = 'Tamu'){
-    echo "User Name: ".$id;
+    echo "User Name: " . $name;
 });
-//Route dinamis dengan parameter nama dan id
-Route::get('/user4/{id}/{nam}', function($id,$name){
-    echo "User ID: ".$id;
+
+//Route Dinamis dengan parameter nama dan id
+Route::get('/user4/{id}/{name}', function($id, $name){
+    echo "User ID: " . $id;
     echo "<br>";
     echo "User Name: " . $name;
 });
 
-// Route demgan metode POST
+//Router dengan metode POST
 Route::post('/simpan', function(){
-    echo "Data Berhasil Disimpan";
+    echo "Data berhasil disimpan";
 });
 
-// Route demgan metode PUT
+//Router dengan metode PUT
 Route::put('/update/{id}', function($id){
-    echo "Data Berhasil Diperbarui dengan ID: " . $id;
+    echo "Data berhasil diperbarui dengan ID: " . $id;
 });
-// Route demgan metode Patch
-Route::patch('/update/2{id}', function($id){
-    echo "Data Berhasil Diperbarui dengan ID: " . $id;
+
+//Router dengan metode PATCH
+Route::patch('/update2/{id}', function($id){
+    echo "Data berhasil diperbarui dengan ID: " . $id;
 });
-// Route demgan metode Delete
+
+//Router dengan metode DELETE
 Route::delete('/hapus/{id}', function($id){
-    echo "Data Berhasil Dihapus dengan ID: " . $id;
+    echo "Data berhasil dihapus dengan ID: " . $id;
 });
-// Route untuk menampilkan halaman test_method
+
+//Route untuk menampilkan halaman test_method
 Route::get('/test-method', function(){
-    return view ('test_method');
+    return view('test_method');
 });
 
-// Menampilkan Halaman Profil 
+//Manampilkan halaman profil
 Route::get('/profil', function(){
-    return view ("myprofile");
+    return view("profile");
 });
-//gunakan untuk memisahkan folder dengan view
-//Route::get('/detailproduk', function(){
-//    return view ("produk.detail");
-//});
 
-// Mengirim data ke view 
+//Gunakan . untuk memisahkan folder dgn view
+// Route::get('/detailproduk', function(){
+//     return view("produk.detail");
+// });
+
+//mengirim data ke view
 // Route::get('/detailproduk/{name}', function($name){
-//     return view ("produk.detail", 
-//         ['product_name' => $name,
-//         'id'=>101,
-//         'color'=> "silver",
-//         'stock'=>12
+//     return view("produk.detail", 
+//         ['product_name' => $name, 
+//         'id'=> 101, 
+//         'color' => 'Silver',
+//         'stock' => 12
 //         ]
 //     );
 // });
 
-// Route::get('/produk', function(){
-//     return view ("produk.index");
+// Route::get('/produk/', function(){
+//     return view('produk.index');
 // });
 // Route::get('/produk/create', function(){
-//     return view ('produk.create');
+//     return view('produk.create');
 // });
 // Route::get('/produk/search', function(){
-//     return view ('produk.search');
+//     return view('produk.search');
 // });
 // Route::get('/produk/detail', function(){
-//     return view ('produk.detail');
-// });
-
-// //Supplier
-// Route::get('/supplier', function(){
-//     return view ('supplier.index');
+//     return view('produk.detail');
 // });
 
 use App\Http\Controllers\ProductController;
 //php artisan make:controller ProductController --resource
 Route::resource('/produk', ProductController::class);
-Route::get('/produk/search', ProductController::class.'@search');
-    
+Route::get('/produk/search', [ProductController::class, 'search']);
 
 //Suplier
 // Route::get('/supplier/', function(){
@@ -115,4 +117,5 @@ Route::get('/produk/search', ProductController::class.'@search');
 // });
 
 //php artisan make:controller SupplierController --resource
+use App\Http\Controllers\SupplierController;
 Route::resource('/supplier', SupplierController::class);
