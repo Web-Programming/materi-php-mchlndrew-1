@@ -34,11 +34,29 @@ class ProductController extends Controller
     $validated = $request->validate([
         'name' => 'required|max:150',
         'price' => 'required|numeric',
-        'description' => 'nullable',
-        'status' => 'required',
+        'description' => 'nullable|string',
+        'status' => 'required|in:new,used',
+        'is_active' => 'nullable|boolean',
         'release_date' => 'nullable|date',
-    ]);
 
+        
+    ]);
+    $request->validate(
+    [
+    'name' => 'required|string|max:100',
+    ],
+    [
+    // Format: 'field.aturan' => 'pesan kustom'
+    'name.required' => 'Nama produk wajib diisi.',
+    'name.max' => 'Nama produk maksimal 100 karakter.',
+    'price.required' => 'Harga produk wajib diisi.',
+    'price.numeric' => 'Harga produk harus berupa angka.',
+    'price.min' => 'Harga produk tidak boleh negatif.',
+    'status.required' => 'Status produk wajib dipilih.',
+    'status.in' => 'Status produk harus new atau used.',
+    'release_date.date'=> 'Format tanggal rilis tidak valid.',
+    ]
+);
     $validated['is_active'] = $request->has('is_active') ? 1 : 0;
 
     Product::create($validated);
@@ -72,14 +90,23 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         $product = Product::findOrFail($id);
-        $validated = $request->validate([
-            'name' => 'required|max:150',
-            'price' => 'required|numeric',
-            'description' => 'nullable',
-            'status' => 'required',
-            'release_date' => 'nullable|date',
+        $validated = $request->validate(
+        [
+            'name' => 'required|string|max:100',
+        ],
+        [
+            // Format: 'field.aturan' => 'pesan kustom'
+            'name.required' => 'Nama produk wajib diisi.',
+            'name.max' => 'Nama produk maksimal 100 karakter.',
+            'price.required' => 'Harga produk wajib diisi.',
+            'price.numeric' => 'Harga produk harus berupa angka.',
+            'price.min' => 'Harga produk tidak boleh negatif.',
+            'status.required' => 'Status produk wajib dipilih.',
+            'status.in' => 'Status produk harus new atau used.',
+            'release_date.date'=> 'Format tanggal rilis tidak valid.',
         
-        ]);
+        ]
+        );
         $validated['is_active'] = $request->has('is_active') ? 1 : 0;
         $product->update($validated);
         return redirect()->route('produk.index')
