@@ -3,14 +3,23 @@
 @section('content')
 
 <h1>{{ $title }}</h1>
+@if ($errors->any())
+<div class="alert alert-danger">
+    <ul class="mb-0">
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 
 <form action="{{ route('produk.update', $product->id) }}" method="POST">
     @csrf
     @method('PUT')
 
     <div class="mb-3">
-        <label>Nama Produk</label><br>
-        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+        <label for="name" class="form-label">Nama Produk</label>
+        <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror"
             value="{{ old('name', $product->name) }}">
         @error('name')
         <div class="invalid-feedback">{{ $message }}</div>
@@ -18,7 +27,7 @@
     </div>
 
     <div class="mb-3">
-        <label>Harga</label><br>
+        <label for="price" class="form-label">Harga</label><br>
         <input type="number" name="price" class="form-control @error('price') is-invalid @enderror"
             value="{{ old('price', $product->price) }}">
         @error('price')
@@ -28,7 +37,7 @@
 
     <div class="mb-3">
         <label>Deskripsi</label><br>
-        <textarea name="description"
+        <textarea name="description" id="description"
             class="form-control @error('description') is-invalid @enderror">{{ old('description', $product->description) }}</textarea>
         @error('description')
         <div class="invalid-feedback">{{ $message }}</div>

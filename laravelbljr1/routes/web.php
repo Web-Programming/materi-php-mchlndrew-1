@@ -61,8 +61,9 @@ Route::middleware('auth')->group(function () {
     // Dashboard Utama
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
-    // Fitur Pencarian Produk (Ditaruh di atas Resource agar tidak bentrok dengan /produk/{id})
+    // Fitur Pencarian (Ditaruh di atas Resource agar tidak bentrok dengan /{id})
     Route::get('/produk/search', [ProductController::class, 'search'])->name('produk.search');
+    Route::get('/supplier/search', [SupplierController::class, 'search'])->name('supplier.search'); // <-- PERBAIKAN: Rute search supplier ditambahkan di sini
     
     // CRUD Produk & Supplier
     Route::resource('/produk', ProductController::class);

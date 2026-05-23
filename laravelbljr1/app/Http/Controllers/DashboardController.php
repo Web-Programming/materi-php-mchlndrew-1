@@ -10,29 +10,38 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // 1. Menghitung total semua barang
+        // 1. Menghitung total seluruh produk
         $totalBarang = Product::count();
         
-        // 2. Menghitung status berdasarkan value dari form ('new' / 'used')
-        $barangBaru = Product::where('status', 'new')->count();
+        // 2. Menggunakan kolom 'is_active' untuk keaktifan produk (1 = aktif, 0 = nonaktif)
+        $barangAktif = Product::where('is_active', 1)->count();
+        $barangHabis = Product::where('is_active', 0)->count();
+        
+        // 3. Menghitung berdasarkan kondisi fisik produk pada kolom 'status' ('new' / 'used')
+        $barangBaru = Product::where('status', 'new')->count(); 
         $barangBekas = Product::where('status', 'used')->count();
         
-        // 3. Menghitung produk yang aktif (dari checkbox is_active kemarin)
-        $barangAktif = Product::where('is_active', 1)->count();
+        // 4. PENGAMAN FORMAT: Kita buat hitungan bersihnya dulu
+        $totalHargaMentah = Product::sum('price') ?? 0;
+        $formatRupiah = 'Rp ' . number_format($totalHargaMentah, 0, ',', '.');
         
-        // 4. Menghitung nilai stok menggunakan kolom 'price' (sesuai input form)
-        $nilaiStok = 'Rp ' . number_format(Product::sum('price'), 0, ',', '.');
+        // Kita simpan ke dalam kedua nama variabel sebagai bentuk antisipasi/back-up
+        $nilaiStok = $formatRupiah;
+        $nilaiStokFormat = $formatRupiah;
         
-        // 5. Mengambil 5 produk terbaru
+        // 5. Mengambil 5 data produk yang paling terakhir ditambahkan
         $barangTerbaru = Product::latest()->take(5)->get();
         
-        return view('Dashboard.dashboard', compact(
+        // 6. Masukkan semua variabel ke dalam compact()
+        return view('dashboard', compact(
             'totalBarang',
+            'barangAktif',
+            'barangHabis',
             'barangBaru',
             'barangBekas',
-            'barangAktif',
-            'nilaiStok',
+            'nilaiStok',       // Cadangan jika Blade memanggil $nilaiStok
+            'nilaiStokFormat', // Cadangan jika Blade memanggil $nilaiStokFormat
             'barangTerbaru'
         ));
-    }   
+    }
 }

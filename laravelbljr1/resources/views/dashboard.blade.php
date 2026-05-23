@@ -69,7 +69,8 @@
         <div class="card border-0 shadow-sm text-white bg-warning">
             <div class="card-body d-flex justify-content-between align-items-center">
                 <div>
-                    <div class="fs-2 fw-bold">{{ $nilaiStok }}</div>
+                    {{-- Diperbaiki menggunakan $nilaiStokFormat --}}
+                    <div class="fs-4 fw-bold">{{ $nilaiStokFormat }}</div>
                     <div>Total Nilai Stok</div>
                 </div>
                 <i class="bi bi-currency-dollar fs-1 opacity-50"></i>
