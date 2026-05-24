@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="mt-4 mb-3">
-    <h1>Dashboard</h1>
+    <h1>PT TFMAKMURJAYA</h1>
     <p class="text-muted">Selamat datang, <strong>{{ Auth::user()->name }}</strong>!</p>
 </div>
 

@@ -44,4 +44,32 @@ class DashboardController extends Controller
             'barangTerbaru'
         ));
     }
+
+   
+    public function laporanBulanIni()
+    {
+        $title = "Laporan Produk Bulan Ini";
+
+        
+        $bulanSekarang = now()->month;
+        $tahunSekarang = now()->year;
+
+        
+        $products = Product::whereMonth('release_date', $bulanSekarang)
+                           ->whereYear('release_date', $tahunSekarang)
+                           ->latest()
+                           ->get();
+
+        
+        $totalProdukBulanIni = $products->count();
+        $totalNilaiBulanIni = $products->sum('price');
+
+        // 4. Kirim data ke halaman view laporan
+        return view('laporanbulanini', compact(
+            'title', 
+            'products', 
+            'totalProdukBulanIni', 
+            'totalNilaiBulanIni'
+        ));
+    }
 }

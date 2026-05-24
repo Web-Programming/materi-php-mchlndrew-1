@@ -1,4 +1,4 @@
-<a class="navbar-brand" href="{{ route('home') }}">Aplikasi Penjualan</a>
+<a class="navbar-brand" href="{{ route('home') }}">PT TFMAKMUR</a>
 
 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
     aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">

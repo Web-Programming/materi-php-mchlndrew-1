@@ -78,3 +78,4 @@ Route::middleware('auth')->group(function () {
     Route::put('/barang/update/{id}', [ProductController::class, 'update'])->name('barang.update');
     Route::delete('/barang/{id}', [ProductController::class, 'destroy'])->name('barang.destroy');
 });
+Route::get('/laporan/bulan-ini', [DashboardController::class, 'laporanBulanIni'])->name('laporan.bulan-ini');
